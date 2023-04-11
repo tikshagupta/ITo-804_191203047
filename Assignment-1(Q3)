@@ -1,0 +1,30 @@
+import csv
+
+# Open the CSV file and read in the data
+with open('3_csv.csv') as file:
+    reader = csv.reader(file)
+    # Skip the header row
+    next(reader)
+    # Create an empty dictionary to store the prices for each stock
+    prices = {}
+    # Loop through each row of the CSV file
+    for row in reader:
+        # Extract the symbol, date, and price from the row
+        ticker, date, price = row
+        # Convert the price from a string to a float
+        price = float(price)
+        # Check if the ticker symbol is already in the dictionary
+        if ticker in prices:
+            # If the ticker symbol is already in the dictionary, add the price to the list of prices for that stock
+            prices[ticker].append(price)
+        else:
+            # If the ticker symbol is not already in the dictionary, create a new list with the first price
+            prices[ticker] = [price]
+
+# Loop through the dictionary of prices for each stock
+for ticker, price_list in prices.items():
+    # Calculate the highest and lowest prices for the stock
+    highest_price = max(price_list)
+    lowest_price = min(price_list)
+    # Print the results
+    print(f"{ticker}: Highest Price = ${highest_price:.2f}, Lowest Price = ${lowest_price:.2f}")
